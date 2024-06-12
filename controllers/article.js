@@ -22,6 +22,11 @@ const getArticleBySlug = async (req, res) => {
             slug: req.params.slug
         }, include: [{
             model:models.Author
+        }, {
+            model: models.Tags,
+            through: {
+                model: models.ArticleTags,
+            }
         }]
     })
     .then(article => {
