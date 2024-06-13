@@ -25,6 +25,34 @@ const createArticle = async (req, res) => {
     });
 }
 
+const updateArticle = async (req, res) => {
+    console.log(req.body);
+    let id = req.params.id;
+    let name = req.body.name;
+    let slug = req.body.slug;
+    let image = req.body.image;
+    let body = req.body.body;
+    const updatedArticle = models.Article.update(
+        {
+            name: name,
+            slug: slug,
+            image: image,
+            body: body
+        },
+        {
+            where: {
+                id: id
+            }
+        }
+    ).then(article => {
+        console.log(article);
+        return res.status(200).json({message: 'Article updated successfully'});
+    }).catch(error => {
+        return res.status(500).send(error.message);
+    });
+}
+
 module.exports = {
-    createArticle
+    createArticle,
+    updateArticle
 };
