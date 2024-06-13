@@ -52,7 +52,22 @@ const updateArticle = async (req, res) => {
     });
 }
 
+const deleteArticle = async (req, res) => {
+    const deletedArticle = models.Article.destroy({
+        where: {
+            id: req.params.id
+        }
+    }).then(article => {
+        console.log(article);
+        return res.status(200).json({message: 'Article deleted successfully'});
+    }).catch(error => {
+        return res.status(500).send(error.message);
+    });
+}
+
+
 module.exports = {
     createArticle,
-    updateArticle
+    updateArticle,
+    deleteArticle
 };
